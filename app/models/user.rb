@@ -361,8 +361,7 @@ class User < ApplicationRecord
       if res.present?
         return res
       end
-    rescue => e
-      # Rails.logger.error "error fetching #{gravatar_url}: #{e.message}"
+    rescue
     end
 
     nil

@@ -11,8 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="always">
   <meta name="theme-color" content="#AC130D">
-  <meta name="story-flags" content="<%=  Vote::STORY_REASONS.to_json %>">
-  <meta name="comment-flags" content="<%=  Vote::COMMENT_REASONS.to_json %>">
+  <meta name="story-flags" content="<%= Vote::STORY_REASONS.to_json %>">
+  <meta name="comment-flags" content="<%= Vote::COMMENT_REASONS.to_json %>">
 
   <% (@meta_tags || []).each do |tag| %>
     <meta property="<%= tag[:property] %>" content="<%= tag[:content] %>">
@@ -44,7 +44,7 @@
       href="<%= @comments_rss_link[:href] %>">
   <% end %>
   <meta name="robots" content="noai, noimageai">
-<% # only for logged-out users so we don't speculatively advance ReadRibbons %>
+<%# only for logged-out users so we don't speculatively advance ReadRibbons %>
   <% if !@user %>
     <script type="speculationrules" nonce="<%= content_security_policy_nonce %>">
       {
@@ -60,7 +60,7 @@
     </script>
   <% end %>
 </head>
-<body data-username='<%= @user.try(:username) %>' data-now-unix='<%= Time.current.to_i  %>'>
+<body data-username="<%= @user.try(:username) %>" data-now-unix="<%= Time.current.to_i %>">
   <header id="nav">
     <a id="logo" style="<%= @traffic_style %>" href="/" title="<%= Rails.application.name %> (Current traffic: <%= @traffic_intensity.to_i %>%)"></a>
     <%= @traffic_novelty %>
@@ -144,8 +144,8 @@
         <a href="/invitations">Invitation Queue (<%= iqc %>)</a>
       <% end %>
       <%= link_to 'Tags', tags_path %>
-      <% if @user && @user.is_moderator? && (hrc = HatRequest.count) > 0 %>
-        <%= link_to "#{hrc} Hat Requests", hat_requests_path, class: 'mod' %>
+      <% if @user && @user.is_moderator? && (hat_request_count = HatRequest.count) > 0 %>
+        <%= link_to "#{hat_request_count} Hat #{'Request'.pluralize(hat_request_count)}", hat_requests_path, class: 'mod' %>
       <% end %>
       <%= link_to 'Filter', filters_path %>
       <%= link_to 'Moderation Log', moderations_path %>

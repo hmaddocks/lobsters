@@ -4,7 +4,7 @@ addresses.  If you recognize anyone, feel free to send them an invitation and
 remove their request.  If a request looks suspicious, delete it.
 </p>
 
-<table class="data zebra" width="100%" cellspacing=0>
+<table class="data zebra" width="100%" cellspacing="0">
 <tr>
   <th width="15%">Date/Time</th>
   <th width="20%">Name</th>
@@ -33,7 +33,7 @@ remove their request.  If a request looks suspicious, delete it.
 <% end %>
 <% if @invitation_requests.length == 0 %>
   <tr>
-    <td colspan=<%= @user.is_moderator?? 5 : 4 %> align="center"><span class="na">No invitation requests</span></td>
+    <td colspan="<%= @user.is_moderator?? 5 : 4 %>" align="center"><span class="na">No invitation requests</span></td>
   </tr>
 <% end %>
 </table>
