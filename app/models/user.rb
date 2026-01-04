@@ -61,6 +61,8 @@ class User < ApplicationRecord
     class_name: "HiddenStory",
     inverse_of: :user,
     dependent: :destroy
+  has_many :hat_requests,
+    dependent: :destroy
 
   include EmailBlocklistValidation
   include Token

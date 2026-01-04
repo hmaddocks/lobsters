@@ -1,46 +1,18 @@
-<% if @hat_requests.length == 0 %>
+<% if @hat_requests.empty? %>
   No hat requests.
 <% else %>
-  <% @hat_requests.each_with_index do |hr,x| %>
-    <% if x > 0 %>
-      <hr>
-    <% end %>
-
-    <%= form_with model: hr, method: :post do |f| %>
-      <div class="labelled_grid">
-        <%= f.label :user_id, "User" %>
-        <span>
-          <%= styled_user_link hr.user %>
-          <%= how_long_ago(hr.created_at) %>
-        </span>
-
-        <%= f.label :hat, "Hat" %>
-        <%= f.text_field "hat", required: true %>
-
-        <%= f.label :link, "Link" %>
-        <%= f.text_field "link", required: true, autocapitalize: :off %>
-        <% if hr.link.to_s.match(/^http/) %>
-          <%= f.label :link, "Link" %>
-          <a href="<%= hr.link %>" rel="ugc"><%= hr.link %></a>
-        <% end %>
-
-        <%= f.label :link, "Comment" %>
-        <div class="shorten_first_p">
-          <%= raw Markdowner.to_html(hr.comment || '', as_of: hr.created_at) %>
-        </div>
-      </div>
-    <% end %>
-
-    <%= form_with model: hr, method: :post do |f| %>
-      <div class="labelled_grid">
-        <%= f.label :link, "Reason" %>
-        <%= f.text_area :reason, required: true %>
-      </div>
-      <div class="row">
-        <%= f.submit "Approve Hat Request", formaction: approve_hat_request_path(hr) %>
-        <%= f.submit "Reject Hat Request", class: "deletion", formaction: reject_hat_request_path(hr)  %>
-      </div>
-    <% end %>
+<table class="data zebra" width="100%" cellspacing="0">
+<tr>
+  <th>Hat</th>
+  <th>Link</th>
+  <th>Comment</th>
+</tr>
+    <% @hat_requests.each do |hat_request| %>
+      <tr>
+        <td><%= hat_request.hat %></td>
+        <td><%= hat_request.link %></td>
+        <td><%= hat_request.comment %></td>
+      </tr>
   <% end %>
+  </table>
 <% end %>
-
