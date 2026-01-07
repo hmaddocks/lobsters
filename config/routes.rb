@@ -219,12 +219,7 @@ Rails.application.routes.draw do
   post "/invitations/delete_request" => "invitations#delete_request",
     :as => "delete_invitation_request"
 
-  resources :hat_requests, except: [:edit] do
-    member do
-      post :approve
-      post :reject
-    end
-  end
+  resources :hat_requests, only: [:index, :new, :create]
   resources :hats, only: %i[index edit] do
     member do
       get :doff
@@ -270,6 +265,13 @@ Rails.application.routes.draw do
     resources :stories, only: [:edit, :update] do
       patch "undelete"
       patch "destroy"
+    end
+
+    resources :hat_requests, only: [:index] do
+      member do
+        post :approve
+        post :reject
+      end
     end
   end
 
