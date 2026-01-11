@@ -1,17 +1,17 @@
 <% if @hat_requests.length == 0 %>
   No hat requests.
 <% else %>
-  <% @hat_requests.each_with_index do |hr,x| %>
+  <% @hat_requests.each_with_index do |hat_request,x| %>
     <% if x > 0 %>
       <hr>
     <% end %>
 
-    <%= form_with model: [:mod, hr], method: :post do |f| %>
+    <%= form_with model: [:mod, hat_request], url: '', local: true, method: :post do |f| %>
       <div class="labelled_grid">
         <%= f.label :user_id, "User" %>
         <span>
-          <%= styled_user_link hr.user %>
-          <%= how_long_ago(hr.created_at) %>
+          <%= styled_user_link hat_request.user %>
+          <%= how_long_ago(hat_request.created_at) %>
         </span>
 
         <%= f.label :hat, "Hat" %>
@@ -19,14 +19,14 @@
 
         <%= f.label :link, "Link" %>
         <%= f.text_field "link", required: true, autocapitalize: :off %>
-        <% if hr.link.to_s.match(/^http/) %>
+        <% if hat_request.link.to_s.match(/^http/) %>
           <%= f.label :link, "Link" %>
-          <a href="<%= hr.link %>" rel="ugc"><%= hr.link %></a>
+          <a href="<%= hat_request.link %>" rel="ugc"><%= hat_request.link %></a>
         <% end %>
 
         <%= f.label :link, "Comment" %>
         <div class="shorten_first_p">
-          <%= raw Markdowner.to_html(hr.comment || '', as_of: hr.created_at) %>
+          <%= raw Markdowner.to_html(hat_request.comment || '', as_of: hat_request.created_at) %>
         </div>
       </div>
       <div class="labelled_grid">
@@ -34,8 +34,8 @@
         <%= f.text_area :reason, required: true %>
       </div>
       <div class="row">
-        <%= f.submit "Approve Hat Request", formaction: approve_mod_hat_request_path(hr) %>
-        <%= f.submit "Reject Hat Request", class: "deletion", formaction: reject_mod_hat_request_path(hr) %>
+        <%= f.submit "Approve Hat Request", formaction: approve_mod_hat_request_path(hat_request) %>
+        <%= f.submit "Reject Hat Request", class: "deletion", formaction: reject_mod_hat_request_path(hat_request) %>
       </div>
     <% end %>
   <% end %>
