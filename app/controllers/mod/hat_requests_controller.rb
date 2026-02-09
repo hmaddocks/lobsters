@@ -18,6 +18,10 @@ class Mod::HatRequestsController < Mod::ModController
     flash[:success] = "Successfully approved hat request."
 
     redirect_to hat_requests_path
+
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:error] = "Failed to approve hat request: #{e.message}"
+    render :index
   end
 
   def reject
@@ -27,5 +31,9 @@ class Mod::HatRequestsController < Mod::ModController
     flash[:success] = "Successfully rejected hat request."
 
     redirect_to hat_requests_path
+
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:error] = "Failed to reject hat request: #{e.message}"
+    render :index
   end
 end
